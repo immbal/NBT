@@ -1,0 +1,55 @@
+###test anchor genes
+```{r}
+
+df_expr <- readRDS("data/ICB_exprs.RDS")
+df_pheno <- readRDS("data/ICB_phenotype.RDS")
+anchorgenes <- filterAnchorGenes(df_expr,df_pheno)
+write.table(anchorgenes,file = "data/anchorgenes.txt",row.names = F,col.names = F)
+```
+
+###test network propagation
+```{r}
+source("NetworkPropagation.R")
+
+PPIs <- read.csv("data/PPIs.csv", sep = ",")
+
+anchorGenes <- scan("data/anchorgenes.txt", character(),sep = "\t"  ) 
+
+rankedGeneList <-  networkPropagation(anchorGenes,PPIs)
+
+write.table(rankedGeneList,file="data/heat_diffusion_top150.txt",row.names = F,col.names = F)
+
+
+
+```
+
+
+
+###identify gene signature
+```{r}
+source("IdentifyGeneSignature.R")
+
+expression <- readRDS( file = "data/TCGA_expression.RDS")
+survival <- readRDS( file = "data/TCGA_survival(OS).RDS")
+
+rankedGeneList <- scan("data/heat_diffusion_top150.txt",character(),sep = "\t")  
+
+geneSig <- identifyGeneSignature(rankedGeneList,expression,survival)
+visualizeIteration(geneSig$interation)
+```
+
+
+
+###visualize enrichment
+```{r}
+
+source("EnrichGeneSignature.R")
+
+reactome <- enrichGeneSignature(geneSig$genesignature)
+
+visualizeEnrichment(reactome)
+
+
+
+```
+
