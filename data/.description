@@ -1,0 +1,8 @@
+anchorgenes.txt : List of anchor genes
+heat_diffusion_top150 : Gene list for heat diffusion analysis (top 150)
+PPIs : Protein-protein interaction data
+ICB_exprs.RDS : Gene expression data for the pan-cancer ICB cohort
+ICB_phenotype.RDS : Immunotherapy response data for the pan-cancer cohort (CR=4, PR=3, SD=2, PD=1)
+TCGA_expression.RDS : Gene expression data for the breast cancer cohort within TCGA
+TCGA_survival(OS).RDS : Overall survival (OS) data for the breast cancer cohort within TCGA
+TCGA_survival(RFS).RDS : Recurrence-free survival (RFS) data for the breast cancer cohort within TCGA
